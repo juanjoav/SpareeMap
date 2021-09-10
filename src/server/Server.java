@@ -32,7 +32,14 @@ public class Server {
         } catch (IOException e) {
             System.out.printf("Error ecorrido: " + e.getStackTrace());
         }
+    }
 
+    public static void main(String[] args) {
+        try {
+            Server server = new Server(123456);
+        } catch (IOException e) {
+            System.out.println("Error " + e.getStackTrace());
+        }
     }
 
 }
