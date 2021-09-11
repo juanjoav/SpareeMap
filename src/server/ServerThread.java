@@ -1,5 +1,7 @@
 package server;
 
+import client.Message;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -22,12 +24,14 @@ public class ServerThread extends Thread{
         setUserId();
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public void setUserId() {
         try {
-            this.username = (String) input.readObject();
+            this.username =  input.readUTF();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -36,10 +40,12 @@ public class ServerThread extends Thread{
     public void run() {
         try {
             while (true) {
-                int option = input.readInt();
-                switch (option) {
+                Message received = (Message)input.readObject();
+                switch (received.getOption()) {
                     case OPTION_ONE:
                         //String message =
+                        //Metodo logica con su retorno :D
+                        printResults(new Message("aqui va la primera", received.getUserName()));
                         break;
                 }
             }
@@ -48,7 +54,17 @@ public class ServerThread extends Thread{
         }
     }
 
-    private void printResults(String results){
-
+    private void printResults(Message results){
+        for( ServerThread sT: threadList) {
+            try {
+                if ( results.getUserName().equals(sT.getUsername())){
+                    System.out.println(sT.getUsername());
+                    sT.output.writeObject(new Message(results.getMessage(), sT.getUsername()));
+                    System.out.println(results.getMessage());
+                }
+            } catch (IOException e) {
+                System.out.println("Error ocurrido " +e.getStackTrace());
+            }
+        }
     }
 }

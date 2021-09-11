@@ -1,5 +1,7 @@
 package client;
 
+import server.Server;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -58,6 +60,14 @@ public class Client {
 
         } catch (IOException e) {
             System.out.println("Ocurrio un problema en el cliente: " + e.getStackTrace());
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            Client client = new Client("localhost", 12345);
+        } catch (IOException e) {
+            System.out.println("Error " + e.getStackTrace());
         }
     }
 }

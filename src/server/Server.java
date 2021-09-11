@@ -36,7 +36,7 @@ public class Server {
 
     public static void main(String[] args) {
         try {
-            Server server = new Server(123456);
+            Server server = new Server(12345);
         } catch (IOException e) {
             System.out.println("Error " + e.getStackTrace());
         }

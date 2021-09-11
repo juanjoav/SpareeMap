@@ -13,7 +13,6 @@ public class ClientThread extends Thread{
 
     public ClientThread(Socket s) throws IOException {
         this.socket = s;
-
     }
 
     @Override
@@ -22,9 +21,11 @@ public class ClientThread extends Thread{
             this.input = new ObjectInputStream(this.socket.getInputStream());
             try {
                 while(true) {
+                    System.out.println();
                     Message message = (Message) input.readObject();
-                    String response = message.getMessage();
 
+                    //String response = message.getMessage();
+                    System.out.println(message.getMessage());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
